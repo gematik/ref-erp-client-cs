@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ca0e71c5-60aa-4e6f-8d57-3c174db22fe4" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="C:\Users\bnneidho\source\repos\gematik\ref-erp-client-cs\ERezeptClientSimpleExample\ERezeptClientSimpleExample\xsds\conn\CertificateService.wsdl" Protocol="file" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="oasis-dss-core-schema-v1.xsd" MetadataType="Schema" ID="52df45d0-44ad-489d-80d9-a976c173b1eb" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/ext/oasis-dss-core-schema-v1.0-os.xsd" />
+    <MetadataFile FileName="CertificateService.xsd" MetadataType="Schema" ID="d555ee41-22c2-4f29-9a7b-b78262a32680" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/conn/CertificateService.xsd" />
+    <MetadataFile FileName="ConnectorContext.xsd" MetadataType="Schema" ID="9f8c649d-f675-4d4a-9aab-303254337764" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/conn/ConnectorContext.xsd" />
+    <MetadataFile FileName="CertificateServiceCommon.xsd" MetadataType="Schema" ID="beba3152-a3e9-4f0f-bd29-78feb977a110" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/conn/CertificateServiceCommon.xsd" />
+    <MetadataFile FileName="xmldsig-core-schema.xsd" MetadataType="Schema" ID="2651c979-7635-4dc9-8749-2d57057a28f6" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/ext/xmldsig-core-schema.xsd" />
+    <MetadataFile FileName="xml.xsd" MetadataType="Schema" ID="8369309c-073a-4c75-9c22-6a6616ed2c1b" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/ext/xml.xsd" />
+    <MetadataFile FileName="ConnectorCommon.xsd" MetadataType="Schema" ID="5e9cce11-02d2-4484-a2ac-65e707e1b19c" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/conn/ConnectorCommon.xsd" />
+    <MetadataFile FileName="TelematikError.xsd" MetadataType="Schema" ID="bcae83ad-474d-4c87-a9b6-dc78cb896d05" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/tel/error/TelematikError.xsd" />
+    <MetadataFile FileName="oasis-sstc-saml-schema-assertion-1.xsd" MetadataType="Schema" ID="6a68ca21-bbf9-4eef-8de6-140a9265fe4f" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/ext/oasis-sstc-saml-schema-assertion-1.1.xsd" />
+    <MetadataFile FileName="CertificateService.wsdl" MetadataType="Wsdl" ID="e5c2f264-a563-475c-b6fb-c740cfa301ee" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/conn/CertificateService.wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

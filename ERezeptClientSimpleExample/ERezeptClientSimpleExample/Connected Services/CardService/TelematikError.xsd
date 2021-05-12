@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:GERROR="http://ws.gematik.de/tel/error/v2.0" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.gematik.de/tel/error/v2.0" version="2.0.0" xml:lang="de" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation xml:lang="de">
+			Copyright (c) 2012, gematik - Gesellschaft für
+			Telematikanwendungen der Gesundheitskarte mbH. Alle Rechte
+			vorbehalten.
+			Beschreibung: Dienst zur Verwaltung der Karten
+		</xs:documentation>
+  </xs:annotation>
+  <xs:element name="Error">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element default="" name="MessageID" type="xs:string" />
+        <xs:element name="Timestamp" type="xs:dateTime" />
+        <xs:element maxOccurs="unbounded" name="Trace">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element default="" name="EventID" type="xs:string" />
+              <xs:element default="" name="Instance" type="xs:string" />
+              <xs:element default="" name="LogReference" type="xs:string" />
+              <xs:element name="CompType" type="xs:string" />
+              <xs:element name="Code" type="xs:integer" />
+              <xs:element name="Severity" type="xs:string" />
+              <xs:element name="ErrorType" type="xs:string" />
+              <xs:element name="ErrorText" type="xs:string" />
+              <xs:element minOccurs="0" name="Detail">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="Encoding" type="xs:string" />
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

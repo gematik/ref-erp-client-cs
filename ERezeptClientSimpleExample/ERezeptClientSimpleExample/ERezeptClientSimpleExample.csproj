@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{778B24F6-32E4-4BE4-B863-36C337574BC8}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ERezeptClientSimpleExample</RootNamespace>
+    <AssemblyName>ERezeptClientSimpleExample</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.10.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.8.10\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="jose-jwt, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\jose-jwt.3.1.1\lib\net461\jose-jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BrainPoolP256r1EcdhKeyManagement.cs" />
+    <Compile Include="BrainPoolP256r1JwsAlgorithm.cs" />
+    <Compile Include="Connected Services\AuthSignatureService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\CardService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\CertificateService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\EventService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="IdpClient.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceEndpointFactory.cs" />
+    <Compile Include="VAU.cs" />
+    <Compile Include="VAUFixed.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Connected Services\AuthSignatureService\AuthSignatureService.wsdl" />
+    <None Include="Connected Services\AuthSignatureService\CertificateServiceCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\ConnectorCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\ConnectorContext.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\ERezeptClientSimpleExample.AuthSignatureService.ExternalAuthenticateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\ERezeptClientSimpleExample.AuthSignatureService.ExternalAuthenticateResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\oasis-dss-core-schema-v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\oasis-dssx-1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\oasis-dssx-11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\oasis-sstc-saml-schema-assertion-1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\saml-schema-assertion-2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\SignatureService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\TelematikError.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\tsl.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\XAdES.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\xenc-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthSignatureService\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardService\CardService.wsdl" />
+    <None Include="Connected Services\CardService\CardService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardService\CardServiceCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardService\ConnectorCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardService\ConnectorContext.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardService\ERezeptClientSimpleExample.CardService.ChangePinResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CardService\ERezeptClientSimpleExample.CardService.DisablePinResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CardService\ERezeptClientSimpleExample.CardService.EnablePinResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CardService\ERezeptClientSimpleExample.CardService.GetPinStatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CardService\ERezeptClientSimpleExample.CardService.GetPinStatusResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CardService\ERezeptClientSimpleExample.CardService.PinResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CardService\ERezeptClientSimpleExample.CardService.UnblockPinResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CardService\ERezeptClientSimpleExample.CardService.VerifyPinResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CardService\oasis-dss-core-schema-v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardService\oasis-sstc-saml-schema-assertion-1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardService\ProductInformation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardService\TelematikError.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardService\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardService\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CertificateService\CertificateService.wsdl" />
+    <None Include="Connected Services\CertificateService\CertificateService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CertificateService\CertificateServiceCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CertificateService\ConnectorCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CertificateService\ConnectorContext.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CertificateService\ERezeptClientSimpleExample.CertificateService.CheckCertificateExpirationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CertificateService\ERezeptClientSimpleExample.CertificateService.CheckCertificateExpirationResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CertificateService\ERezeptClientSimpleExample.CertificateService.ReadCardCertificateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CertificateService\ERezeptClientSimpleExample.CertificateService.ReadCardCertificateResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CertificateService\ERezeptClientSimpleExample.CertificateService.VerifyCertificateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CertificateService\ERezeptClientSimpleExample.CertificateService.VerifyCertificateResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CertificateService\oasis-dss-core-schema-v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CertificateService\oasis-sstc-saml-schema-assertion-1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CertificateService\TelematikError.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CertificateService\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CertificateService\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventService\CardService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventService\CardServiceCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventService\CardTerminalInfo.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventService\ConnectorCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventService\ConnectorContext.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventService\ERezeptClientSimpleExample.EventService.GetCardsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\ERezeptClientSimpleExample.EventService.GetCardsResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\ERezeptClientSimpleExample.EventService.GetCardTerminalsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\ERezeptClientSimpleExample.EventService.GetCardTerminalsResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\ERezeptClientSimpleExample.EventService.GetResourceInformationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\ERezeptClientSimpleExample.EventService.GetResourceInformationResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\ERezeptClientSimpleExample.EventService.GetSubscriptionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\ERezeptClientSimpleExample.EventService.GetSubscriptionResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\ERezeptClientSimpleExample.EventService.RenewSubscriptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\ERezeptClientSimpleExample.EventService.RenewSubscriptionsResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\ERezeptClientSimpleExample.EventService.SubscribeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\ERezeptClientSimpleExample.EventService.SubscribeResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\ERezeptClientSimpleExample.EventService.UnsubscribeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\ERezeptClientSimpleExample.EventService.UnsubscribeResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\EventService.wsdl" />
+    <None Include="Connected Services\EventService\EventService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventService\oasis-dss-core-schema-v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventService\oasis-sstc-saml-schema-assertion-1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventService\ProductInformation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventService\TelematikError.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventService\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventService\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="xsds\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\AuthSignatureService\" />
+    <WCFMetadataStorage Include="Connected Services\CardService\" />
+    <WCFMetadataStorage Include="Connected Services\CertificateService\" />
+    <WCFMetadataStorage Include="Connected Services\EventService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AuthSignatureService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AuthSignatureService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AuthSignatureService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CardService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CardService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CardService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CertificateService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CertificateService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CertificateService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EventService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EventService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EventService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

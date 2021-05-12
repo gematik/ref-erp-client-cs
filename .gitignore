@@ -50,3 +50,8 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+/ERezeptClientSimpleExample/ERezeptClientSimpleExample/obj
+/ERezeptClientSimpleExample/packages
+/ERezeptClientSimpleExample/ERezeptClientSimpleExample/bin
+/.vs
+/ERezeptClientSimpleExample/.vs

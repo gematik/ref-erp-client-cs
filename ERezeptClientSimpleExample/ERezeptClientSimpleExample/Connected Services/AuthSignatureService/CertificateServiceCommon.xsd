@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns:CERTCMN="http://ws.gematik.de/conn/CertificateServiceCommon/v2.0" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.gematik.de/conn/CertificateServiceCommon/v2.0" version="2.0.1" xmlns="http://www.w3.org/2001/XMLSchema">
+  <annotation>
+    <documentation xml:lang="de">
+			Copyright (c) 2012, gematik - Gesellschaft für Telematikanwendungen der Gesundheitskarte mbH.
+				Alle Rechte vorbehalten.
+			Beschreibung: Schema für gemeinsam nutzbare Elemente des Zertifikatsdienstes
+		</documentation>
+  </annotation>
+  <simpleType name="CertRefEnum">
+    <restriction base="token">
+      <enumeration value="C.AUT" />
+      <enumeration value="C.ENC" />
+      <enumeration value="C.SIG" />
+      <enumeration value="C.QES" />
+    </restriction>
+  </simpleType>
+  <element name="X509DataInfoList" type="CERTCMN:X509DataInfoListType" />
+  <simpleType name="CheckCertificateDetailEnum">
+    <restriction base="token">
+      <enumeration value="CERT_SIG_ERROR" />
+      <enumeration value="BUILD_CHAIN_FAILED" />
+      <enumeration value="CHECK_REVOCATION_FAILED" />
+      <enumeration value="CERT_REVOKED" />
+      <enumeration value="CERT_EXPIRED" />
+      <enumeration value="CERT_BAD_FORMAT" />
+      <enumeration value="POLICY_ERROR" />
+      <enumeration value="QC_STATEMENT_ERROR" />
+      <enumeration value="WRONG_ROLE" />
+      <enumeration value="UNKNOWN_CRITICAL_EXTENSIONS" />
+      <enumeration value="CERT_REVOKED_AFTER" />
+      <enumeration value="NO_REVOCATION_CHECK" />
+      <enumeration value="TSL_OUT_OF_DATE" />
+      <enumeration value="QUALIFIED" />
+    </restriction>
+  </simpleType>
+  <complexType name="CheckCertificateDetailsType">
+    <sequence>
+      <element minOccurs="0" maxOccurs="unbounded" name="CheckCertificateDetail" type="CERTCMN:CheckCertificateDetailEnum" />
+    </sequence>
+  </complexType>
+  <element name="CheckCertificateDetails" type="CERTCMN:CheckCertificateDetailsType" />
+  <complexType name="X509DataInfoListType">
+    <sequence>
+      <element maxOccurs="unbounded" name="X509DataInfo">
+        <complexType>
+          <sequence>
+            <element name="CertRef" type="CERTCMN:CertRefEnum" />
+            <element minOccurs="0" name="X509Data">
+              <complexType>
+                <sequence>
+                  <element name="X509IssuerSerial">
+                    <complexType>
+                      <sequence>
+                        <element name="X509IssuerName" type="string" />
+                        <element name="X509SerialNumber" type="string" />
+                      </sequence>
+                    </complexType>
+                  </element>
+                  <element name="X509SubjectName" type="string" />
+                  <element ref="CERTCMN:X509Certificate" />
+                </sequence>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+  <element name="X509Certificate" type="base64Binary" />
+</schema>

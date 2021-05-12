@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns:CERTCMN="http://ws.gematik.de/conn/CertificateServiceCommon/v2.0" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:vr="urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema#" xmlns:CONN="http://ws.gematik.de/conn/ConnectorCommon/v5.0" xmlns:GERROR="http://ws.gematik.de/tel/error/v2.0" xmlns:dss="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:CCTX="http://ws.gematik.de/conn/ConnectorContext/v2.0" xmlns:SIG="http://ws.gematik.de/conn/SignatureService/v7.4" xmlns:sp="urn:oasis:names:tc:dss-x:1.0:profiles:SignaturePolicy:schema#" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.gematik.de/conn/SignatureService/v7.4" version="7.4.2" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="../ext/xmldsig-core-schema.xsd" namespace="http://www.w3.org/2000/09/xmldsig#" />
+  <import schemaLocation="../ext/oasis-dssx-1.0-profiles-sigpolicy-schema-cd01.xsd" namespace="urn:oasis:names:tc:dss-x:1.0:profiles:SignaturePolicy:schema#" />
+  <import schemaLocation="../ext/oasis-dssx-1.0-profiles-vr-cd1.xsd" namespace="urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema#" />
+  <import schemaLocation="../ext/oasis-dss-core-schema-v1.0-os.xsd" namespace="urn:oasis:names:tc:dss:1.0:core:schema" />
+  <import schemaLocation="CertificateServiceCommon.xsd" namespace="http://ws.gematik.de/conn/CertificateServiceCommon/v2.0" />
+  <import schemaLocation="ConnectorCommon.xsd" namespace="http://ws.gematik.de/conn/ConnectorCommon/v5.0" />
+  <import schemaLocation="ConnectorContext.xsd" namespace="http://ws.gematik.de/conn/ConnectorContext/v2.0" />
+  <import schemaLocation="../tel/error/TelematikError.xsd" namespace="http://ws.gematik.de/tel/error/v2.0" />
+  <annotation>
+    <documentation xml:lang="de">
+			Copyright (c) 2014, gematik - Gesellschaft f??r
+			Telematikanwendungen der Gesundheitskarte mbH. Alle Rechte
+			vorbehalten. Beschreibung: Schema f??r den Signaturdienst des
+			Konnektors
+		</documentation>
+  </annotation>
+  <element name="SignDocument">
+    <complexType>
+      <sequence>
+        <element ref="CONN:CardHandle" />
+        <element ref="CCTX:Context" />
+        <element ref="SIG:TvMode" />
+        <element minOccurs="0" ref="SIG:JobNumber">
+          <annotation>
+            <documentation>
+							Am Konnektor verpflichtend, am Signaturproxy optional
+						</documentation>
+          </annotation>
+        </element>
+        <element maxOccurs="unbounded" ref="SIG:SignRequest" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="SignRequest">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" name="OptionalInputs">
+          <complexType>
+            <all>
+              <element minOccurs="0" ref="dss:SignatureType" />
+              <element minOccurs="0" ref="dss:Properties" />
+              <element minOccurs="0" ref="SIG:IncludeEContent" />
+              <element minOccurs="0" name="IncludeObjects">
+                <complexType>
+                  <sequence>
+                    <element maxOccurs="unbounded" ref="dss:IncludeObject" />
+                  </sequence>
+                </complexType>
+              </element>
+              <element minOccurs="0" ref="dss:SignaturePlacement" />
+              <element minOccurs="0" ref="dss:ReturnUpdatedSignature" />
+              <element minOccurs="0" ref="dss:Schemas" />
+              <element minOccurs="0" ref="sp:GenerateUnderSignaturePolicy" />
+              <element minOccurs="0" ref="SIG:ViewerInfo" />
+            </all>
+          </complexType>
+        </element>
+        <element ref="SIG:Document" />
+        <element ref="SIG:IncludeRevocationInfo" />
+      </sequence>
+      <attribute name="RequestID" type="string" use="required" />
+    </complexType>
+  </element>
+  <element name="SignatureSchemes">
+    <simpleType>
+      <restriction base="string">
+        <enumeration value="RSASSA-PSS" />
+        <enumeration value="RSASSA-PKCS1-v1_5" />
+      </restriction>
+    </simpleType>
+  </element>
+  <element name="DocumentWithSignature" type="SIG:DocumentType" />
+  <element name="SignDocumentResponse">
+    <complexType>
+      <sequence>
+        <element maxOccurs="unbounded" ref="SIG:SignResponse" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="SignResponse">
+    <complexType>
+      <sequence>
+        <element ref="CONN:Status" />
+        <element minOccurs="0" name="OptionalOutputs">
+          <complexType>
+            <sequence>
+              <element minOccurs="0" ref="SIG:DocumentWithSignature" />
+              <element minOccurs="0" ref="vr:VerificationReport" />
+            </sequence>
+          </complexType>
+        </element>
+        <element minOccurs="0" ref="dss:SignatureObject" />
+      </sequence>
+      <attribute name="RequestID" type="string" use="required" />
+    </complexType>
+  </element>
+  <element name="VerifyDocument">
+    <complexType>
+      <sequence>
+        <element ref="CCTX:Context" />
+        <element minOccurs="0" ref="SIG:TvMode" />
+        <element minOccurs="0" name="OptionalInputs">
+          <complexType>
+            <all>
+              <element minOccurs="0" name="VerifyManifests" />
+              <element minOccurs="0" ref="SIG:UseVerificationTime" />
+              <element minOccurs="0" ref="dss:AdditionalKeyInfo" />
+              <element minOccurs="0" ref="vr:ReturnVerificationReport" />
+              <element minOccurs="0" ref="dss:Schemas" />
+              <element minOccurs="0" ref="SIG:ViewerInfo" />
+            </all>
+          </complexType>
+        </element>
+        <element minOccurs="0" ref="SIG:Document" />
+        <element minOccurs="0" ref="dss:SignatureObject" />
+        <element ref="SIG:IncludeRevocationInfo" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="UseVerificationTime" type="dss:UseVerificationTimeType" />
+  <element name="VerifyDocumentResponse">
+    <complexType>
+      <sequence>
+        <element ref="CONN:Status" />
+        <element name="VerificationResult" type="SIG:VerificationResultType" />
+        <element minOccurs="0" name="OptionalOutputs">
+          <complexType>
+            <sequence>
+              <element minOccurs="0" ref="dss:VerifyManifestResults" />
+              <element minOccurs="0" ref="SIG:DocumentWithSignature" />
+              <element minOccurs="0" ref="dss:UpdatedSignature" />
+              <element minOccurs="0" ref="vr:VerificationReport" />
+            </sequence>
+          </complexType>
+        </element>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="GetJobNumber">
+    <complexType>
+      <sequence>
+        <element ref="CCTX:Context" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="GetJobNumberResponse">
+    <complexType>
+      <sequence>
+        <element ref="SIG:JobNumber" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="ExternalAuthenticate">
+    <complexType>
+      <sequence>
+        <element ref="CONN:CardHandle" />
+        <element ref="CCTX:Context" />
+        <element minOccurs="0" name="OptionalInputs">
+          <complexType>
+            <all>
+              <element minOccurs="0" ref="dss:SignatureType" />
+              <element minOccurs="0" ref="SIG:SignatureSchemes" />
+            </all>
+          </complexType>
+        </element>
+        <element ref="SIG:BinaryString" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="ExternalAuthenticateResponse">
+    <complexType>
+      <sequence>
+        <element ref="CONN:Status" />
+        <element minOccurs="0" ref="dss:SignatureObject" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="StopSignature">
+    <complexType>
+      <sequence>
+        <element ref="CCTX:Context" />
+        <element ref="SIG:JobNumber" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="StopSignatureResponse">
+    <complexType>
+      <sequence>
+        <element ref="CONN:Status" />
+      </sequence>
+    </complexType>
+  </element>
+  <element default="UNCONFIRMED" name="TvMode">
+    <simpleType>
+      <restriction base="string">
+        <enumeration value="NONE">
+          <annotation>
+            <documentation>
+							Keine Anzeige im Trusted Viewer
+						</documentation>
+          </annotation>
+        </enumeration>
+        <enumeration value="UNCONFIRMED">
+          <annotation>
+            <documentation>
+							Anzeige im Trusted Viewer, aber ohne Warten auf Benutzerbest??tigung
+						</documentation>
+          </annotation>
+        </enumeration>
+        <enumeration value="CONFIRMED">
+          <annotation>
+            <documentation>
+							Anzeige im Trusted Viewer mit Benutzerbest??tigung
+						</documentation>
+          </annotation>
+        </enumeration>
+      </restriction>
+    </simpleType>
+  </element>
+  <element name="JobNumber">
+    <simpleType>
+      <restriction base="string">
+        <pattern value="[A-Z][A-Z][A-Z]-[0-9][0-9][0-9]" />
+      </restriction>
+    </simpleType>
+  </element>
+  <element name="ViewerInfo">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" name="XslStyleSheets">
+          <complexType>
+            <sequence>
+              <element maxOccurs="unbounded" ref="CONN:XslStylesheet" />
+            </sequence>
+          </complexType>
+        </element>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="Deselected" />
+  <element name="SignatureForm">
+    <simpleType>
+      <restriction base="token">
+        <enumeration value="urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:BES" />
+        <enumeration value="urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-T" />
+        <enumeration value="urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-C" />
+        <enumeration value="urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X" />
+        <enumeration value="urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X-L" />
+      </restriction>
+    </simpleType>
+  </element>
+  <element name="IncludeEContent" type="boolean" />
+  <element name="IncludeRevocationInfo" type="boolean" />
+  <element name="Document" type="SIG:DocumentType" />
+  <complexType name="DocumentType">
+    <complexContent mixed="false">
+      <extension base="CONN:DocumentType">
+        <attribute name="ShortText" type="string" use="optional" />
+      </extension>
+    </complexContent>
+  </complexType>
+  <element name="BinaryString" type="SIG:BinaryDocumentType" />
+  <complexType name="BinaryDocumentType">
+    <complexContent mixed="false">
+      <extension base="dss:DocumentBaseType">
+        <all>
+          <element ref="dss:Base64Data" />
+        </all>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="VerificationResultType">
+    <sequence>
+      <element name="HighLevelResult">
+        <simpleType>
+          <restriction base="token">
+            <enumeration value="VALID" />
+            <enumeration value="INCONCLUSIVE" />
+            <enumeration value="INVALID" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element name="TimestampType">
+        <simpleType>
+          <restriction base="token">
+            <enumeration value="SIGNATURE_EMBEDDED_TIMESTAMP" />
+            <enumeration value="QUALIFIED_TIMESTAMP" />
+            <enumeration value="USER_DEFINED_TIMESTAMP" />
+            <enumeration value="SYSTEM_TIMESTAMP" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element name="Timestamp" type="dateTime" />
+    </sequence>
+  </complexType>
+  <element name="ShortText">
+    <simpleType>
+      <restriction base="string">
+        <maxLength value="1000" />
+      </restriction>
+    </simpleType>
+  </element>
+  <element name="CounterSignatureMarker">
+    <complexType>
+      <sequence>
+        <element maxOccurs="unbounded" name="SignatureValueReference">
+          <complexType>
+            <attribute name="IdRef" type="IDREF" />
+          </complexType>
+        </element>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="DisplayableAttributes">
+    <complexType>
+      <sequence>
+        <element maxOccurs="unbounded" name="DisplayableAttribute">
+          <complexType>
+            <sequence>
+              <element name="Key">
+                <simpleType>
+                  <restriction base="string">
+                    <maxLength value="80" />
+                  </restriction>
+                </simpleType>
+              </element>
+              <element name="Value">
+                <simpleType>
+                  <restriction base="string">
+                    <maxLength value="8000" />
+                  </restriction>
+                </simpleType>
+              </element>
+            </sequence>
+          </complexType>
+        </element>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="ReferenceToSignerCertificate" type="boolean" />
+</schema>

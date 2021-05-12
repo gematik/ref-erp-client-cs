@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="91ef035c-bd39-4f03-85c1-919580a1252a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="C:\Users\bnneidho\source\repos\gematik\ref-erp-client-cs\ERezeptClientSimpleExample\ERezeptClientSimpleExample\xsds\conn\EventService.wsdl" Protocol="file" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="xml.xsd" MetadataType="Schema" ID="6ff08aad-9985-4454-94c3-551118e55260" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/ext/xml.xsd" />
+    <MetadataFile FileName="TelematikError.xsd" MetadataType="Schema" ID="976fac86-6e9d-4148-831f-ffdc19b300fa" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/tel/error/TelematikError.xsd" />
+    <MetadataFile FileName="xmldsig-core-schema.xsd" MetadataType="Schema" ID="dc75591a-d003-4fcb-92ee-ebf6b9fb3d0e" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/ext/xmldsig-core-schema.xsd" />
+    <MetadataFile FileName="CardServiceCommon.xsd" MetadataType="Schema" ID="667b18ff-7a42-431c-b21c-1814a81f0974" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/conn/CardServiceCommon.xsd" />
+    <MetadataFile FileName="ConnectorCommon.xsd" MetadataType="Schema" ID="9472b10d-910a-44d9-a042-f3418355b083" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/conn/ConnectorCommon.xsd" />
+    <MetadataFile FileName="ConnectorContext.xsd" MetadataType="Schema" ID="fd0c1331-51af-4e75-9a74-c295e7b69c87" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/conn/ConnectorContext.xsd" />
+    <MetadataFile FileName="ProductInformation.xsd" MetadataType="Schema" ID="505528ef-9f73-4fb8-bcbb-f140f773a937" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/tel/version/ProductInformation.xsd" />
+    <MetadataFile FileName="EventService.xsd" MetadataType="Schema" ID="6c606e80-239f-4681-8a16-33913dd10494" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/conn/EventService.xsd" />
+    <MetadataFile FileName="EventService.wsdl" MetadataType="Wsdl" ID="175319a7-7ebb-423a-aded-39c89b7ab60f" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/conn/EventService.wsdl" />
+    <MetadataFile FileName="oasis-dss-core-schema-v1.xsd" MetadataType="Schema" ID="b3291d69-39db-472e-806d-6c4f406072c1" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/ext/oasis-dss-core-schema-v1.0-os.xsd" />
+    <MetadataFile FileName="oasis-sstc-saml-schema-assertion-1.xsd" MetadataType="Schema" ID="1db43705-5a29-40dc-9ceb-c7c7038d8153" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/ext/oasis-sstc-saml-schema-assertion-1.1.xsd" />
+    <MetadataFile FileName="CardTerminalInfo.xsd" MetadataType="Schema" ID="cd5058cf-e023-40cb-ae00-06ae89b28907" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/conn/CardTerminalInfo.xsd" />
+    <MetadataFile FileName="CardService.xsd" MetadataType="Schema" ID="1a2ebae1-f0e0-43ad-8588-4c2da6cb5e88" SourceId="1" SourceUrl="file:///C:/Users/bnneidho/source/repos/gematik/ref-erp-client-cs/ERezeptClientSimpleExample/ERezeptClientSimpleExample/xsds/conn/CardService.xsd" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

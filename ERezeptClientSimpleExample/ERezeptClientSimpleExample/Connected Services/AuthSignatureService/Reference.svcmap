@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="175effdd-a1a0-47d1-822c-e6c22ec5cdb8" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="D:\work\erezept_gematik\VAUSpielwiese\xsds\conn\AuthSignatureService.wsdl" Protocol="file" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="oasis-dssx-1.xsd" MetadataType="Schema" ID="d7c5c034-08d9-4af1-bf41-569e3996764b" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/ext/oasis-dssx-1.0-profiles-sigpolicy-schema-cd01.xsd" />
+    <MetadataFile FileName="ConnectorContext.xsd" MetadataType="Schema" ID="030e0065-13fc-4a65-ba86-74c518eec13c" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/conn/ConnectorContext.xsd" />
+    <MetadataFile FileName="oasis-dss-core-schema-v1.xsd" MetadataType="Schema" ID="b6536542-6dac-4442-8724-2c4bec7a00f5" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/ext/oasis-dss-core-schema-v1.0-os.xsd" />
+    <MetadataFile FileName="saml-schema-assertion-2.xsd" MetadataType="Schema" ID="d02f3da3-9d96-4a9a-809a-9f1f3e2deeb3" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/ext/saml-schema-assertion-2.0.xsd" />
+    <MetadataFile FileName="oasis-dssx-11.xsd" MetadataType="Schema" ID="9697fd5f-846b-4084-8ba0-f9a25fa4ff38" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/ext/oasis-dssx-1.0-profiles-vr-cd1.xsd" />
+    <MetadataFile FileName="tsl.xsd" MetadataType="Schema" ID="deaeb93e-40d9-4b20-bc0b-fc7cbd10ed4b" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/ext/tsl.xsd" />
+    <MetadataFile FileName="XAdES.xsd" MetadataType="Schema" ID="15fd7e88-ea9a-44c1-a15c-e9041dec8fc0" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/ext/XAdES.xsd" />
+    <MetadataFile FileName="TelematikError.xsd" MetadataType="Schema" ID="dcf7f340-aa24-4283-91df-7c8fd9177ab6" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/tel/error/TelematikError.xsd" />
+    <MetadataFile FileName="ConnectorCommon.xsd" MetadataType="Schema" ID="628d368c-d343-44be-81ea-20f521dfe6a3" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/conn/ConnectorCommon.xsd" />
+    <MetadataFile FileName="xmldsig-core-schema.xsd" MetadataType="Schema" ID="9b0d7767-522b-4ea5-ae91-3971ca36dafb" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/ext/xmldsig-core-schema.xsd" />
+    <MetadataFile FileName="SignatureService.xsd" MetadataType="Schema" ID="10f98512-904a-41c6-bb9a-6361eb4bc006" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/conn/SignatureService.xsd" />
+    <MetadataFile FileName="CertificateServiceCommon.xsd" MetadataType="Schema" ID="a99a10b9-ca0f-47b4-8c73-280ea0980028" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/conn/CertificateServiceCommon.xsd" />
+    <MetadataFile FileName="xml.xsd" MetadataType="Schema" ID="ac0817e9-c6e0-4d22-95f3-54a5e7946a86" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/ext/xml.xsd" />
+    <MetadataFile FileName="AuthSignatureService.wsdl" MetadataType="Wsdl" ID="6d0a94a6-bad1-4a6a-abb7-21d12c260512" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/conn/AuthSignatureService.wsdl" />
+    <MetadataFile FileName="oasis-sstc-saml-schema-assertion-1.xsd" MetadataType="Schema" ID="7fbc6dbd-2696-4142-85f0-93c633667b9e" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/ext/oasis-sstc-saml-schema-assertion-1.1.xsd" />
+    <MetadataFile FileName="xenc-schema.xsd" MetadataType="Schema" ID="f09a161e-dc5a-48f8-83fc-810a4fdc38fd" SourceId="1" SourceUrl="file:///D:/work/erezept_gematik/VAUSpielwiese/xsds/ext/xenc-schema.xsd" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

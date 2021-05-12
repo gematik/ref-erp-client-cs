@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:vr="urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema#" xmlns="urn:oasis:names:tc:dss-x:1.0:profiles:SignaturePolicy:schema#" xmlns:dss="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:xades="http://uri.etsi.org/01903/v1.3.2#" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:oasis:names:tc:dss-x:1.0:profiles:SignaturePolicy:schema#" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="xmldsig-core-schema.xsd" namespace="http://www.w3.org/2000/09/xmldsig#" />
+  <xs:import schemaLocation="XAdES.xsd" namespace="http://uri.etsi.org/01903/v1.3.2#" />
+  <xs:import schemaLocation="xml.xsd" namespace="http://www.w3.org/XML/1998/namespace" />
+  <xs:import schemaLocation="oasis-dss-core-schema-v1.0-os.xsd" namespace="urn:oasis:names:tc:dss:1.0:core:schema" />
+  <xs:import schemaLocation="oasis-dssx-1.0-profiles-vr-cd1.xsd" namespace="urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema#" />
+  <xs:complexType name="SignaturePolicyDetailsType">
+    <xs:sequence>
+      <xs:element name="SignaturePolicyIdentifier" type="xs:anyURI" />
+      <xs:element minOccurs="0" name="SignaturePolicyLocation" type="xs:anyURI" />
+      <xs:element minOccurs="0" name="DigestAndAlgorithm" type="xades:DigestAlgAndValueType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GenerateUnderSignaturePolicy" type="SignaturePolicyDetailsType" />
+  <xs:element name="ReturnSupportedSignaturePolicies" />
+  <xs:element name="UsedSignaturePolicy" type="SignaturePolicyDetailsType" />
+  <xs:element name="SupportedSignaturePolicies">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="SupportedSignaturePolicy" type="SignaturePolicyDetailsType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerifyUnderSignaturePolicy" type="VerifyUnderSignaturePolicyType" />
+  <xs:complexType name="VerifyUnderSignaturePolicyType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DefaultPolicy" type="SignaturePolicyDetailsType" />
+      <xs:element minOccurs="0" ref="ExplicitPolicies" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExplicitPolicies" type="PolicySignaturePairsType" />
+  <xs:complexType name="PolicySignaturePairsType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="PolicySignaturePair" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PolicySignaturePair" type="PolicySignaturePairType" />
+  <xs:complexType name="PolicySignaturePairType">
+    <xs:sequence>
+      <xs:element ref="SignatureIdentifier" />
+      <xs:element ref="SignaturePolicy" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SignaturePolicy" type="SignaturePolicyDetailsType" />
+  <xs:element name="SignatureIdentifier" type="vr:SignedObjectIdentifierType" />
+  <xs:element name="VerifiedUnderSignaturePolicy" type="VerifiedUnderSignaturePolicyType" />
+  <xs:complexType name="VerifiedUnderSignaturePolicyType">
+    <xs:sequence>
+      <xs:element ref="SignaturePolicy" />
+      <xs:element minOccurs="0" ref="SignatureIdentifier" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
