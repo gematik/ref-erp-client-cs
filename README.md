@@ -3,45 +3,47 @@
 ## Motivation
 
 Der Beispiel-Code zeigt exemplarisch die Ansteuerung von IDP und ERezept-Fachdienst aus Arzt- und Apothekensystemen in C# mit Hilfe der ***TITUS-Demoumgebung***.<br>
-Der Beispielcode versucht viele Aspekte der Spezifikation umzusetzen ist aber nicht geeignet 1:1 in einer Produktivumgebung eingesetzt zu werden, weil vor allem 
-Robustheit und Fehlertolleranz nicht ausreichend umgesetzt sind.
+Der Beispielcode versucht viele Aspekte der Spezifikation umzusetzen, ist aber nicht geeignet 1:1 in einer Produktivumgebung eingesetzt zu werden, weil vor allem 
+Robustheit und Fehlertoleranz nicht ausreichend umgesetzt sind. Weiterhin ist die Pr√ºfung der Signatur- und Verschl√ºsselungs-Zertifikate vom 
+IDP und vom E-Rezept-Fachdienst nur ansatzweise dargestellt. Es fehlt die Pr√ºfung der Zertifikate gem√§√ü [gemSpec_PKI#TUK_PKI_018].
 
 ## Funktionsumfang
 
-- Beispiel der VAU aus gemSpec_Krypt_V2.19.0.pdf Seite 98 um zu beweisen, das die VAU-Implementierung das richtige macht.
+- Beispiel zur Verschl√ºsselung f√ºr die VAU gem√§√ü [gemSpec_Krypt#7] 
 
-- Arzt: ERezept erstellen
+- Arzt: E-Rezept erstellen
   - `TestCreateERezeptInPraxis();`
-  - erzeugt einen BearerToken vom IDP Server (300s g¸ltig!)
-  - bildet den ersten $create-Request zum Erezept-Fachdienst um die RezeptID zu erzeugen. Der Request wird ¸ber die VAU verschickt
+  - f√ºhrt die Authentifizierung als Arzt-Praxis mit dem IDP durch und l√§dt das Access_Token als BearerToken vom IDP (300s g√ºltig!)
+  - erzeugt mittels FHIR-Operation `$create` des E-Rezept-Fachdienstes eine Task-Ressource, um die RezeptID zu erzeugen. 
+    Der Request wird verschl√ºsselt und an die VAU verschickt<br/> 
     siehe https://github.com/gematik/api-erp/blob/master/docs/authentisieren.adoc
-  - der Vorgang wird ein 2. mal wiederholt um zu demonstrieren, wie mit der VAU und nutzerPseudonym ab dem 2. Call umzugehen ist
+  - der Vorgang wird ein 2. mal wiederholt um zu demonstrieren, wie mit der VAU und deren Nutzer-Pseudonym ab dem 2. Call umzugehen ist
   - das macht das Bsp **nicht**: 
-    - auf ‰hnliche Weise kann dann der mit dem Konnektor signierte FHIR-Datensatz als Rezept angelegt werden.
+    - auf √§hnliche Weise kann dann der mit dem Konnektor signierte FHIR-Datensatz (Rezept-Bundle) als Rezept angelegt werden (`$activate`-Operation).
 
 - Apotheke: E-Rezept abholen
-  - Beispiel l‰dt ein ERezept in die Apotheke unter Angabe von taskid und accesscode (unter Nutzung von IDP und VAU).<br>
+  - f√ºhrt die Authentifizierung als Apotheke mit dem IDP durch und l√§dt das Access_Token als BearerToken vom IDP
+  - Beispiel l√§dt ein ERezept in die Apotheke unter Angabe von Access_Token, taskid und accesscode (unter Nutzung von IDP und VAU).<br>
     `TestAcceptRezeptInApotheke(taskid : "19b56423-201c-11b2-804f-df8a779f13bd", accesscode : "c8a8086dc855bd7fb19630bfaae254b86068eca45131f32382cb6b27d75841ee");`<br>
     Dieses Rezept sollte vor jedem Lauf in Titus unter Rezeptverwaltung neu erzeugt werden, da derzeit jedes ERezept nur genau einmal geladen werden kann. (Sonst gibt es einen Fehler)
-  - erzeugt einen BearerToken vom IDP Server (300s g¸ltig!)
-  - bildet den $accept-Request zum ERezept-Fachdienst um ein ERezept abzurufen und auszugeben. 
-  - Der Request wird ¸ber die VAU verschickt
-        siehe https://github.com/gematik/api-erp/blob/master/docs/authentisieren.adoc
+  - bildet den `$accept`-Request zum E-Rezept-Fachdienst, um ein E-Rezept abzurufen und auszugeben. 
+  - Der Request wird verschl√ºsselt an die VAU verschickt.<br/>
+    siehe https://github.com/gematik/api-erp/blob/master/docs/authentisieren.adoc
 
-**Derzeit sind im Code noch einige Stellen mit `TITUS BUG` markiert, die in den n‰chsten TITUS-Releases behoben werden und dann in diesem Projekt korrigiert werden kˆnnen**
+**Derzeit sind im Code noch einige Stellen mit `TITUS BUG` markiert, die in den n√§chsten TITUS-Releases behoben werden und dann in diesem Projekt korrigiert werden k√∂nnen**
 
 ## Konfiguration
 
-In `Program.cs` sind alle URLs, und variablen Einstellungsparameter f¸r den Konnektorkontext, IDP als Konstanten angelegt und so konfiguriert, dass man nur 
+In `Program.cs` sind alle URLs, und variablen Einstellungsparameter f√ºr den Konnektorkontext, IDP als Konstanten angelegt und so konfiguriert, dass man nur 
 einen Parmameter zwingend anpassen muss: <br>
 
-	/// Client-Zertifikat f¸r die Kommunikation mit dem lokalen Konnektor des PS
+	/// Client-Zertifikat f√ºr die Kommunikation mit dem lokalen Konnektor des PS
 	/// kann aus Download aus TITUS unter Mandanteninformation heruntergeladen werden
 	static readonly X509Certificate2 KonnektorCommunikationCert = new(File.ReadAllBytes(@"C:\work\ps_erp_aps_01.p12"), "00");
 
 **Ersetzen Sie `C:\work\ps_erp_aps_01.p12` durch das Client-Zertifikat aus Ihrem TITUS-Account!**
 
 ## xsds-Ordner
-enth‰lt die f¸r die Generierung der Konnektor-Webserviceendpunkt nˆtigen WDSL Dateien<br>
+enth√§lt die f√ºr die Generierung der Konnektor-Webserviceendpunkt n√∂tigen WDSL Dateien<br>
 `VS2029 -> Add Service Reference ...`<br>
 Download unter: https://fachportal.gematik.de/fileadmin/Fachportal/Downloadcenter/Schemata-_und_WSDL-Dateien/Schema-_und_WSDL-Dateien/OPB3.1_Schemadateien_R3.1.2_Kon_PTV3_20191002.zip

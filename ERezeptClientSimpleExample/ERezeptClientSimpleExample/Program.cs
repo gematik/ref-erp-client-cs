@@ -27,7 +27,7 @@ namespace ERezeptClientSimpleExample {
         /// <summary>
         /// User Agent für alle HTTP Requests zum IDP und ERezept-Server Format im Implementierungsleitfaden gemILF_PS_eRp 1.3 vorgegeben. Im Titus-Umfeld 'frei wählbar'
         /// </summary>
-        const string USER_AGENT = "test"; //derzeit noch TITUS BUG sollte so sein: "MyHeroCompanyMyProduct/1.0.1/" + CLIENT_ID; 
+        const string USER_AGENT = "MyHeroCompany-MyProduct/1.0.1";  
         const string REDIRECT_URI = "http://test-ps.gematik.de/erezept"; //Die für den Client beim Server hinterlegte redirect_uri. Muss dem bei der Registrierung des PS bei der Gematik hinterlegten Wert entsprechen. Im Titus-Umfeld 'frei wählbar'
 
         /// <summary>

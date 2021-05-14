@@ -86,7 +86,7 @@ namespace ERezeptClientSimpleExample {
 
 
             //HACK invalid DD signature (weiter unten funktioniert der Code perfekt mit anderer signatur) !!! -> TITUS BUG
-            ECPublicKeyParameters zertKey = RetrivePubKeyFromCert(idp_dd_sig_cert);
+            ECPublicKeyParameters zertKey = RetrievePubKeyFromCert(idp_dd_sig_cert);
             try {
                 string payload = JWT.Decode(DD_jwt, zertKey, JwsAlgorithm.ES256,
                     new JwtSettings().RegisterJws(JwsAlgorithm.ES256, new BrainPoolP256r1JwsAlgorithm()).RegisterJwsAlias("BP256R1", JwsAlgorithm.ES256));
@@ -136,7 +136,7 @@ namespace ERezeptClientSimpleExample {
             Console.Out.WriteLine($"SigCert={idp_token_sig_cert.SubjectName}");
 
             //Verify signature of challengeJwtString
-            ECPublicKeyParameters zertKey2 = RetrivePubKeyFromCert(idp_token_sig_cert);
+            ECPublicKeyParameters zertKey2 = RetrievePubKeyFromCert(idp_token_sig_cert);
             JObject challengeTokenPayload = JObject.Parse(JWT.Decode($"{getChallengeResponseJson["challenge"]}", zertKey2, JwsAlgorithm.ES256,
                 new JwtSettings().RegisterJws(JwsAlgorithm.ES256, new BrainPoolP256r1JwsAlgorithm())
                     .RegisterJwsAlias("BP256R1", JwsAlgorithm.ES256)));
@@ -183,7 +183,7 @@ namespace ERezeptClientSimpleExample {
             var jwePayloadJson = new JObject {["njwt"] = jws}.ToString(Formatting.None);
             Console.Out.WriteLine($"jwePayload: {jwePayloadJson}");
 
-            ECPublicKeyParameters idpEncKeyPublic = RetriveIdpPubKey(DD["uri_puk_idp_enc"].ToString());
+            ECPublicKeyParameters idpEncKeyPublic = RetrieveIdpPubKey(DD["uri_puk_idp_enc"].ToString());
 
             long exp = long.Parse(challengeTokenPayload["exp"].ToString());
             string jwe = JWT.Encode(jwePayloadJson, idpEncKeyPublic, JweAlgorithm.ECDH_ES, JweEncryption.A256GCM,
@@ -396,7 +396,7 @@ namespace ERezeptClientSimpleExample {
             return sig;
         }
 
-        static ECPublicKeyParameters RetrivePubKeyFromCert(X509Certificate2 cert) {
+        static ECPublicKeyParameters RetrievePubKeyFromCert(X509Certificate2 cert) {
             var z = cert.GetECDsaPublicKey();
             var p = z.ExportParameters(false);
 
@@ -411,15 +411,15 @@ namespace ERezeptClientSimpleExample {
         }
 
 
-        ECPublicKeyParameters RetriveIdpPubKey(string url) {
+        ECPublicKeyParameters RetrieveIdpPubKey(string url) {
             var idpEncKeyJson = JObject.Parse(_httpClientDefault.GetStringAsync(url).Result);
             Console.Out.WriteLine($"idpEncKeyJson: {idpEncKeyJson["x"]} {idpEncKeyJson["y"]}");
 
             X9ECParameters x9EC = ECNamedCurveTable.GetByOid(TeleTrusTObjectIdentifiers.BrainpoolP256R1);
             ECDomainParameters domainParams = new ECDomainParameters(x9EC.Curve, x9EC.G, x9EC.N, x9EC.H, x9EC.GetSeed());
 
-            var x = new BigInteger(Base64Url.Decode(idpEncKeyJson["x"].ToString()));
-            var y = new BigInteger(Base64Url.Decode(idpEncKeyJson["y"].ToString()));
+            var x = new BigInteger(1, Base64Url.Decode(idpEncKeyJson["x"].ToString()));
+            var y = new BigInteger(1, Base64Url.Decode(idpEncKeyJson["y"].ToString()));
             var idpEcPoint = domainParams.Curve.CreatePoint(x, y);
 
             return new ECPublicKeyParameters(idpEcPoint, domainParams);
