@@ -199,9 +199,14 @@ Accept: application/fhir+xml;charset=utf-8
                     }
                 };
 
-                HttpResponseMessage response = client.PostAsync("VAU/0",
-                        new ByteArrayContent(gesamtoutput)
-                            {Headers = {ContentType = MediaTypeHeaderValue.Parse("application/octet-stream")}})
+                var httpContent = new ByteArrayContent(gesamtoutput) {Headers = {
+                    ContentType = MediaTypeHeaderValue.Parse("application/octet-stream"),
+                }};
+                httpContent.Headers.Add("X-erp-user", "l"); //Leistungserbringer
+                httpContent.Headers.Add("X-erp-resource", "Task");
+
+
+                HttpResponseMessage response = client.PostAsync("VAU/0", httpContent)
                     .Result; // Blocking call!    
 
                 if (response.IsSuccessStatusCode) {
