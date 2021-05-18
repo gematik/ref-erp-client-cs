@@ -100,10 +100,9 @@ Authorization: Bearer {bearerPraxis}
 Content-Type: application/fhir+xml
 User-Agent: {USER_AGENT}
 Accept: application/fhir+xml;charset=utf-8
-Content-Length: {contentbody.Length}
+Content-Length: {Encoding.UTF8.GetBytes(contentbody).Length}
 
-{contentbody}
-";
+{contentbody}"; //Content-Length die Zeichenanzahl für UTF8 enthalten, weil der Body später als UTF8 kodiert wird 
                 var vau = new VAU(USER_AGENT, EREZEPT_FACHDIENST_URL);
 
                 string requestid = VAU.ByteArrayToHexString(vau.GetRandom(16));
