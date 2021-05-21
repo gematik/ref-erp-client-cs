@@ -380,6 +380,7 @@ namespace ERezeptClientSimpleExample {
                     },
                     BinaryString = new BinaryDocumentType {
                         Base64Data = new Base64Data {
+                            MimeType = "application/octet-stream",
                             Value = sha265Hash,
                         }
                     },
