@@ -37,6 +37,7 @@ namespace ERezeptClientSimpleExample {
         static readonly X509Certificate2 KonnektorCommunikationCert = new(File.ReadAllBytes(@"C:\work\ps_erp_aps_01.p12"), "00"); 
 
         static void Main() {
+
             Console.Out.WriteLine("--------------------------------------------------");
             Console.Out.WriteLine("VAUFixed.DemoBspAusGemSpecCrypt-------------------");
             Console.Out.WriteLine("--------------------------------------------------");

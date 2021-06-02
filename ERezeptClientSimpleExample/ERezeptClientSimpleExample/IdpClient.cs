@@ -78,7 +78,7 @@ namespace ERezeptClientSimpleExample {
             Console.Out.WriteLine($"CODE_CHALLENGE={codeChallenge}");
 
             //IDP get DD
-            string DD_jwt = _httpClientDefault.GetStringAsync($"{_idpserver}/auth/realms/idp/.well-known/openid-configuration").Result; //TITUS-BUG   auth/realms/idp muss raus
+            string DD_jwt = _httpClientDefault.GetStringAsync($"{_idpserver}/.well-known/openid-configuration").Result; 
             var DD_jwt_headers = JWT.Headers(DD_jwt);
 
             var x5c = ((object[]) DD_jwt_headers["x5c"])[0].ToString();
@@ -372,12 +372,12 @@ namespace ERezeptClientSimpleExample {
 
             var respex = service.ExternalAuthenticate(
                 new ExternalAuthenticate {
-                    CardHandle = smcbCardHandle,
+                    CardHandle = smcbCardHandle, /* HACK TITUS-BUG OptionalInputs führen derzeit zu einer Exception
                     OptionalInputs = new ExternalAuthenticateOptionalInputs {
                         SignatureSchemes = SignatureSchemes.RSASSAPSS,
                         SignatureSchemesSpecified = true,
                         SignatureType = "urn:ietf:rfc:3447",
-                    },
+                    }, */
                     BinaryString = new BinaryDocumentType {
                         Base64Data = new Base64Data {
                             MimeType = "application/octet-stream",
