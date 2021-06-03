@@ -99,7 +99,6 @@ namespace ERezeptClientSimpleExample {
 Host: {new Uri(EREZEPT_FACHDIENST_URL).Host}
 Authorization: Bearer {bearerPraxis}
 Content-Type: application/fhir+xml
-User-Agent: {USER_AGENT}
 Accept: application/fhir+xml;charset=utf-8
 Content-Length: {Encoding.UTF8.GetBytes(contentbody).Length}
 
@@ -176,7 +175,6 @@ Content-Length: {Encoding.UTF8.GetBytes(contentbody).Length}
 Host: {new Uri(EREZEPT_FACHDIENST_URL).Host}
 Authorization: Bearer {bearer}
 Content-Type: application/fhir+xml
-User-Agent: {USER_AGENT}
 Accept: application/fhir+xml;charset=utf-8
 
 ";
