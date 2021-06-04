@@ -331,9 +331,9 @@ namespace ERezeptClientSimpleExample {
             HttpClient client = new HttpClient(new HttpClientHandler {
                 ClientCertificates = {_connectorCommunikationCert},
                 ClientCertificateOptions = ClientCertificateOption.Manual
-            }) {
-                DefaultRequestHeaders = {UserAgent = {ProductInfoHeaderValue.Parse(_userAgent)}}
-            };
+            });
+            client.DefaultRequestHeaders.UserAgent.ParseAdd(_userAgent);
+
 
             string sds = client.GetStringAsync(_httpsKonInstanz2TitusTiDiensteDeConnectorSds).Result;
 

@@ -54,9 +54,9 @@ namespace ERezeptClientSimpleExample {
             var client = new HttpClient {
                 Timeout = TimeSpan.FromSeconds(30),
                 DefaultRequestHeaders = { 
-                    UserAgent = { ProductInfoHeaderValue.Parse(_useragent)},  
                     ExpectContinue = false} 
             };
+            client.DefaultRequestHeaders.UserAgent.ParseAdd(_useragent);
             var zert = client.GetByteArrayAsync(VAUzertifikatUrl).Result;
 
             var z = new X509Certificate2(zert);
