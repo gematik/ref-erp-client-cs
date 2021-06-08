@@ -1,8 +1,12 @@
 ﻿using System;
-using System.Security.Cryptography;
+using System.Linq;
 using Jose;
+using Org.BouncyCastle.Asn1;
+using Org.BouncyCastle.Asn1.X9;
+using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Parameters;
-using Org.BouncyCastle.Utilities;
+using Org.BouncyCastle.Math;
+using Org.BouncyCastle.Security;
 
 namespace ERezeptClientSimpleExample {
     /// <summary>
@@ -17,17 +21,20 @@ namespace ERezeptClientSimpleExample {
             if (key is not ECPublicKeyParameters publicKey) {
                 throw new ArgumentException("key must be ECPublicKeyParameters");
             }
-            ECCurve brainpoolP256R1 = ECCurve.NamedCurves.brainpoolP256r1;
+         
+            ISigner signer = SignerUtilities.GetSigner(X9ObjectIdentifiers.ECDsaWithSha256.Id);
+            signer.Init(false, publicKey);
+            signer.BlockUpdate(securedInput, 0, securedInput.Length);
 
-            var dsa = ECDsa.Create(new ECParameters {
-                Curve = brainpoolP256R1,
-                Q = new ECPoint {
-                    X = BigIntegers.AsUnsignedByteArray(publicKey.Q.XCoord.ToBigInteger()),
-                    Y = BigIntegers.AsUnsignedByteArray(publicKey.Q.YCoord.ToBigInteger()),
-                },
-            });
+            var derSignature = new DerSequence(
+                    // first 32 bytes is "r" number
+                    new DerInteger(new BigInteger(1, signature.Take(32).ToArray())),
+                    // last 32 bytes is "s" number
+                    new DerInteger(new BigInteger(1, signature.Skip(32).ToArray())))
+                .GetDerEncoded();
 
-            return dsa.VerifyData(securedInput, signature, HashAlgorithmName.SHA256);
+           var verifySignature = signer.VerifySignature(derSignature);
+           return verifySignature;
         }
     }
 }

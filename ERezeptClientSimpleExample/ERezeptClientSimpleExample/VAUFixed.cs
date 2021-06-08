@@ -1,25 +1,29 @@
 ﻿using System;
-using System.Security.Cryptography;
+using Org.BouncyCastle.Asn1.TeleTrust;
+using Org.BouncyCastle.Asn1.X9;
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Math;
 
 namespace ERezeptClientSimpleExample {
     public class VAUFixed : VAU {
-                protected override KeyCoords GetVauPublicKeyXY() {
+        protected override KeyCoords GetVauPublicKeyXY() {
             return new() {
                 X = new BigInteger(CertPublicKeyX, 16),
                 Y = new BigInteger(CertPublicKeyY, 16)
             };
         }
 
-        protected override ECParameters GenerateNewECDHKey() {
-            ECParameters myexportParametersFix = new ECParameters {
-                Curve = ECCurve.NamedCurves.brainpoolP256r1,
-                Q = {
-                    X = HexStringToByteArray(EphemeralPublicKeyX), Y = HexStringToByteArray(EphemeralPublicKeyY)
-                },
-                D = HexStringToByteArray(EccPrivateKey),
-            };
-            return myexportParametersFix;
+        protected override AsymmetricCipherKeyPair GenerateNewECDHKey() {
+            X9ECParameters x9EC = ECNamedCurveTable.GetByOid(TeleTrusTObjectIdentifiers.BrainpoolP256R1);
+            ECDomainParameters ecDomain = new ECDomainParameters(x9EC.Curve, x9EC.G, x9EC.N, x9EC.H, x9EC.GetSeed());
+
+            return new AsymmetricCipherKeyPair(
+                new ECPublicKeyParameters(x9EC.Curve.CreatePoint(
+                    new BigInteger(1, HexStringToByteArray(EphemeralPublicKeyX)),
+                    new BigInteger(1, HexStringToByteArray(EphemeralPublicKeyY))
+                ), ecDomain),
+                new ECPrivateKeyParameters(new BigInteger(1, HexStringToByteArray(EccPrivateKey)), ecDomain));
         }
 
         protected override byte[] GetIv() {

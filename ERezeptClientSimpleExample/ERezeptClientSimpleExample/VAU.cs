@@ -2,8 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Org.BouncyCastle.Asn1.TeleTrust;
@@ -42,11 +40,14 @@ namespace ERezeptClientSimpleExample {
             return keyBytes;
         }
 
-        protected virtual ECParameters GenerateNewECDHKey() {
+        protected virtual AsymmetricCipherKeyPair GenerateNewECDHKey() {
             //eigener Key
-            ECDsa key = ECDsa.Create(ECCurve.NamedCurves.brainpoolP256r1);
-            var myexportParameters = key.ExportParameters(true);
-            return myexportParameters;
+            X9ECParameters x9EC = ECNamedCurveTable.GetByOid(TeleTrusTObjectIdentifiers.BrainpoolP256R1);
+            ECDomainParameters ecDomain = new ECDomainParameters(x9EC.Curve, x9EC.G, x9EC.N, x9EC.H, x9EC.GetSeed());
+
+            var gen = new ECKeyPairGenerator();
+            gen.Init(new ECKeyGenerationParameters(ecDomain, _random));
+            return gen.GenerateKeyPair();
         }
 
         protected virtual KeyCoords GetVauPublicKeyXY() {
@@ -73,11 +74,13 @@ namespace ERezeptClientSimpleExample {
             X9ECParameters x9EC = ECNamedCurveTable.GetByOid(TeleTrusTObjectIdentifiers.BrainpoolP256R1);
             ECDomainParameters ecDomain = new ECDomainParameters(x9EC.Curve, x9EC.G, x9EC.N, x9EC.H, x9EC.GetSeed());
 
-            ECParameters myECDHKey = GenerateNewECDHKey();
-            ECPrivateKeyParameters myPrivate = new ECPrivateKeyParameters(new BigInteger(1, myECDHKey.D), ecDomain);
-            Console.Out.WriteLine("MY public X=" + ByteArrayToHexString(myECDHKey.Q.X));
-            Console.Out.WriteLine("MY public Y=" + ByteArrayToHexString(myECDHKey.Q.Y));
-            Console.Out.WriteLine("MY private =" + ByteArrayToHexString(myECDHKey.D));
+            var keyPair = GenerateNewECDHKey();
+            ECPrivateKeyParameters myPrivateKey = (ECPrivateKeyParameters) keyPair.Private;
+            ECPublicKeyParameters myPublicKey = (ECPublicKeyParameters) keyPair.Public;
+
+            Console.Out.WriteLine("MY public X=" + new BigInteger(1, myPublicKey.Q.XCoord.GetEncoded()).ToString(16));
+            Console.Out.WriteLine("MY public Y=" + new BigInteger(1, myPublicKey.Q.YCoord.GetEncoded()).ToString(16));
+            Console.Out.WriteLine("MY private =" + myPrivateKey.D.ToString(16));
 
             KeyCoords vauPublicKeyXY = GetVauPublicKeyXY();
             var point = x9EC.Curve.CreatePoint(vauPublicKeyXY.X, vauPublicKeyXY.Y);
@@ -87,7 +90,7 @@ namespace ERezeptClientSimpleExample {
 
             //SharedSecret
             IBasicAgreement aKeyAgree = new ECDHBasicAgreement();
-            aKeyAgree.Init(myPrivate);
+            aKeyAgree.Init(myPrivateKey);
             BigInteger sharedSecret = aKeyAgree.CalculateAgreement(vauPublicKey);
             byte[] sharedSecretBytes = sharedSecret.ToByteArray().ToArray();
 
@@ -125,8 +128,14 @@ namespace ERezeptClientSimpleExample {
 
             using var mem = new MemoryStream();
             mem.WriteByte(0x01); //Version
-            mem.Write(myECDHKey.Q.X, 0, myECDHKey.Q.X.Length); //XKoordinate VAU Zert
-            mem.Write(myECDHKey.Q.Y, 0, myECDHKey.Q.Y.Length); //YKoordinate VAU Zert
+
+            var koords = (
+                X: myPublicKey.Q.XCoord.GetEncoded(),
+                Y: myPublicKey.Q.YCoord.GetEncoded()
+            );
+
+            mem.Write(koords.X, 0, koords.X.Length); //XKoordinate VAU Zert
+            mem.Write(koords.Y, 0, koords.Y.Length); //YKoordinate VAU Zert
             mem.Write(iv, 0, iv.Length);
             mem.Write(outputAESCGM, 0, outputAESCGM.Length);
             return mem.ToArray();

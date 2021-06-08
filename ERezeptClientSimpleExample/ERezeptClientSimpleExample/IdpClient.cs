@@ -398,17 +398,8 @@ namespace ERezeptClientSimpleExample {
         }
 
         static ECPublicKeyParameters RetrievePubKeyFromCert(X509Certificate2 cert) {
-            var z = cert.GetECDsaPublicKey();
-            var p = z.ExportParameters(false);
-
-            X9ECParameters x9EC = ECNamedCurveTable.GetByOid(TeleTrusTObjectIdentifiers.BrainpoolP256R1);
-            ECDomainParameters domainParams = new ECDomainParameters(x9EC.Curve, x9EC.G, x9EC.N, x9EC.H, x9EC.GetSeed());
-
-            var x = new BigInteger(1, p.Q.X);
-            var y = new BigInteger(1, p.Q.Y);
-            var idpEcPoint = domainParams.Curve.CreatePoint(x, y);
-
-            return new ECPublicKeyParameters(idpEcPoint, domainParams);
+            return new Org.BouncyCastle.X509.X509CertificateParser()
+                .ReadCertificate(cert.GetRawCertData()).GetPublicKey() as ECPublicKeyParameters;
         }
 
 
