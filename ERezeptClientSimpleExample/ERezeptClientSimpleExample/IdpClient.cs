@@ -85,16 +85,9 @@ namespace ERezeptClientSimpleExample {
             var idp_dd_sig_cert = new X509Certificate2(Encoding.UTF8.GetBytes(x5c));
 
 
-            //HACK invalid DD signature (weiter unten funktioniert der Code perfekt mit anderer signatur) !!! -> TITUS BUG
             ECPublicKeyParameters zertKey = RetrievePubKeyFromCert(idp_dd_sig_cert);
-            try {
-                string payload = JWT.Decode(DD_jwt, zertKey, JwsAlgorithm.ES256,
-                    new JwtSettings().RegisterJws(JwsAlgorithm.ES256, new BrainPoolP256r1JwsAlgorithm()).RegisterJwsAlias("BP256R1", JwsAlgorithm.ES256));
-            } catch (Exception exception) {
-                Console.WriteLine(exception);
-            }
 
-            var DD_json = JWT.Payload(DD_jwt);
+            var DD_json = JWT.Decode(DD_jwt, zertKey, JwsAlgorithm.ES256, new JwtSettings().RegisterJws(JwsAlgorithm.ES256, new BrainPoolP256r1JwsAlgorithm()).RegisterJwsAlias("BP256R1", JwsAlgorithm.ES256)); //incl Validierung des Tokens gegen Zertifikat
             var DD = JObject.Parse(DD_json);
             Console.Out.WriteLine($"DD={DD_json}");
 
@@ -128,8 +121,7 @@ namespace ERezeptClientSimpleExample {
             Console.Out.WriteLine($"GET Challenge response={getChallengeResponseJson}");
 
             // GET IDP Sig Cert to validate Challenge
-            var pukiUriSig = DD["uri_puk_idp_sig"].ToString();
-            string sigCertX5C = _httpClientDefault.GetStringAsync(pukiUriSig).Result;
+            string sigCertX5C = _httpClientDefault.GetStringAsync($"{DD["uri_puk_idp_sig"]}").Result;
             var sigCertString = JObject.Parse(sigCertX5C)["x5c"].FirstOrDefault()?.ToString();
             // ReSharper disable once AssignNullToNotNullAttribute
             var idp_token_sig_cert = new X509Certificate2(Encoding.UTF8.GetBytes(sigCertString));
@@ -183,7 +175,7 @@ namespace ERezeptClientSimpleExample {
             var jwePayloadJson = new JObject {["njwt"] = jws}.ToString(Formatting.None);
             Console.Out.WriteLine($"jwePayload: {jwePayloadJson}");
 
-            ECPublicKeyParameters idpEncKeyPublic = RetrieveIdpPubKey(DD["uri_puk_idp_enc"].ToString());
+            ECPublicKeyParameters idpEncKeyPublic = RetrieveIdpPubKey($"{DD["uri_puk_idp_enc"]}");
 
             long exp = long.Parse(challengeTokenPayload["exp"].ToString());
             string jwe = JWT.Encode(jwePayloadJson, idpEncKeyPublic, JweAlgorithm.ECDH_ES, JweEncryption.A256GCM,
@@ -227,7 +219,6 @@ namespace ERezeptClientSimpleExample {
             // ReSharper disable once RedundantAssignment
             byte[] rawAesTokenKey = new byte[32];
             _random.NextBytes(rawAesTokenKey);
-            rawAesTokenKey = Base64Url.Decode("D9ccZA6pUTIoaxHqvl9nbxs6AqkT93Leg43rFwslce8"); //HACK wegen Exception vom Server -> TITUS BUG
             string tokenaeskey = Base64Url.Encode(rawAesTokenKey);
 
             var key_verifier_jwe_payload_json =
@@ -372,12 +363,12 @@ namespace ERezeptClientSimpleExample {
 
             var respex = service.ExternalAuthenticate(
                 new ExternalAuthenticate {
-                    CardHandle = smcbCardHandle, /* HACK TITUS-BUG OptionalInputs führen derzeit zu einer Exception
+                    CardHandle = smcbCardHandle, 
                     OptionalInputs = new ExternalAuthenticateOptionalInputs {
                         SignatureSchemes = SignatureSchemes.RSASSAPSS,
                         SignatureSchemesSpecified = true,
                         SignatureType = "urn:ietf:rfc:3447",
-                    }, */
+                    }, 
                     BinaryString = new BinaryDocumentType {
                         Base64Data = new Base64Data {
                             MimeType = "application/octet-stream",

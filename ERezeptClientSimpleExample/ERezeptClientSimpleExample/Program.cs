@@ -147,7 +147,6 @@ Content-Length: {Encoding.UTF8.GetBytes(contentbody).Length}
 
                     if (response.Headers.TryGetValues("userpseudonym", out var values)) {
                         nutzerPseudonym = values.First();
-                        nutzerPseudonym = "0"; //HACK unterschiedl. userpseudonyme gehen mit Titus noch nicht - wird demnächst behoben - TITUS BUG 
                     }
                 } else {
                     Console.WriteLine($"{(int) response.StatusCode} ({response.ReasonPhrase})");
