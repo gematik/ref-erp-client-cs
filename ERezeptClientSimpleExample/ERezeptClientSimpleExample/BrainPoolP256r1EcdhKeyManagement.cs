@@ -82,7 +82,7 @@ namespace ERezeptClientSimpleExample {
             ecdh.Init(ephemeralPrvKey);
 
             var z = ecdh.CalculateAgreement(externalPublicKey);
-            return BigIntegers.AsUnsignedByteArray(z);
+            return BigIntegers.AsUnsignedByteArray(32, z);
         }
 
         static byte[] CalcBeLengthArray(int length) {
