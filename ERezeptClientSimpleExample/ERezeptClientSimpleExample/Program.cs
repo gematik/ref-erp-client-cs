@@ -80,9 +80,8 @@ namespace ERezeptClientSimpleExample {
             //Praxis Rezept erstellen mit VAU
             string nutzerPseudonym = "0";
             for (int i = 0; i < 2; i++) {
-                string contentbody = @"
-
-<Parameters xmlns=""http://hl7.org/fhir"">
+                //der Body muss unbedingt sofort OHNE Leerzeichen anfangen, weil es sonst Fehler bei Titus gibt
+                string contentbody = @"<Parameters xmlns=""http://hl7.org/fhir"">
   <parameter>
     <name value=""workflowType""/>
     <valueCoding>
@@ -90,19 +89,17 @@ namespace ERezeptClientSimpleExample {
       <code value=""160""/>
     </valueCoding>
   </parameter>
-</Parameters>
+</Parameters>";
 
-
-";
-
+                var binaryContent = Encoding.UTF8.GetBytes(contentbody);
                 string content = $@"POST /Task/$create HTTP/1.1
 Host: {new Uri(EREZEPT_FACHDIENST_URL).Host}
 Authorization: Bearer {bearerPraxis}
 Content-Type: application/fhir+xml
 Accept: application/fhir+xml;charset=utf-8
-Content-Length: {Encoding.UTF8.GetBytes(contentbody).Length}
+Content-Length: {binaryContent.Length}
 
-{contentbody}"; //Content-Length die Zeichenanzahl für UTF8 enthalten, weil der Body später als UTF8 kodiert wird 
+";
                 var vau = new VAU(USER_AGENT, EREZEPT_FACHDIENST_URL);
 
                 string requestid = VAU.ByteArrayToHexString(vau.GetRandom(16));
@@ -111,7 +108,7 @@ Content-Length: {Encoding.UTF8.GetBytes(contentbody).Length}
 
                 Console.Out.WriteLine($"{requestid.ToLowerInvariant()} {aeskey.ToLowerInvariant()}");
 
-                var gesamtoutput = vau.Encrypt(p);
+                var gesamtoutput = vau.Encrypt(p, binaryContent);
 
                 var client = new HttpClient {
                     BaseAddress = new Uri(EREZEPT_FACHDIENST_URL), Timeout = TimeSpan.FromSeconds(30),
@@ -176,9 +173,9 @@ Authorization: Bearer {bearer}
 Content-Type: application/fhir+xml
 Accept: application/fhir+xml;charset=utf-8
 
-";
+"; //2 Newlines am Ende sind wichtig wegen RFC-HTTP
 
-                var vau = new VAU(USER_AGENT, EREZEPT_FACHDIENST_URL);
+                var vau = new VAU(USER_AGENT, EREZEPT_FACHDIENST_URL); 
 
                 string requestid = VAU.ByteArrayToHexString(vau.GetRandom(16));
                 string aeskey = VAU.ByteArrayToHexString(vau.GetRandom(16));

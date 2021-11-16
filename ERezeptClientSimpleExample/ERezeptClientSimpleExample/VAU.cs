@@ -70,7 +70,14 @@ namespace ERezeptClientSimpleExample {
             };
         }
 
-        public byte[] Encrypt(string message) {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="content">null oder der schon binär codierte Content die unmittelbar hinter die Message gehängt wird</param>
+        /// <returns></returns>
+        public byte[] Encrypt(string message, byte[] content = null) {
+            content ??= new byte[0];
             X9ECParameters x9EC = ECNamedCurveTable.GetByOid(TeleTrusTObjectIdentifiers.BrainpoolP256R1);
             ECDomainParameters ecDomain = new ECDomainParameters(x9EC.Curve, x9EC.G, x9EC.N, x9EC.H, x9EC.GetSeed());
 
@@ -112,7 +119,7 @@ namespace ERezeptClientSimpleExample {
 
             //AES CGM
             byte[] input = Encoding.UTF8.GetBytes(message);
-            byte[] outputAESCGM = new byte[input.Length + 16];
+            byte[] outputAESCGM = new byte[input.Length + content.Length + 16];
 
             //random IV
             var iv = GetIv();
@@ -122,6 +129,7 @@ namespace ERezeptClientSimpleExample {
             var parameters = new AeadParameters(new KeyParameter(aes128Key_CEK), 128, iv);
             cipher.Init(true, parameters);
             var len = cipher.ProcessBytes(input, 0, input.Length, outputAESCGM, 0);
+            len += cipher.ProcessBytes(content, 0, content.Length, outputAESCGM, len);
             var final = cipher.DoFinal(outputAESCGM, len);
 
             Console.Out.WriteLine(len + final);
