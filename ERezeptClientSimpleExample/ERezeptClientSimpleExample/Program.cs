@@ -92,14 +92,13 @@ namespace ERezeptClientSimpleExample {
 </Parameters>";
 
                 var binaryContent = Encoding.UTF8.GetBytes(contentbody);
-                string content = $@"POST /Task/$create HTTP/1.1
-Host: {new Uri(EREZEPT_FACHDIENST_URL).Host}
-Authorization: Bearer {bearerPraxis}
-Content-Type: application/fhir+xml
-Accept: application/fhir+xml;charset=utf-8
-Content-Length: {binaryContent.Length}
-
-";
+                string content = $"POST /Task/$create HTTP/1.1\r\n" +
+                                 $"Host: {new Uri(EREZEPT_FACHDIENST_URL).Host}\r\n" +
+                                 $"Authorization: Bearer {bearerPraxis}\r\n" +
+                                 $"Content-Type: application/fhir+xml\r\n" +
+                                 $"User-Agent: {USER_AGENT}\r\n" +
+                                 $"Accept: application/fhir+xml;charset=utf-8\r\n" +
+                                 $"Content-Length: { binaryContent.Length}\r\n\r\n";
                 var vau = new VAU(USER_AGENT, EREZEPT_FACHDIENST_URL);
 
                 string requestid = VAU.ByteArrayToHexString(vau.GetRandom(16));
@@ -167,13 +166,11 @@ Content-Length: {binaryContent.Length}
                     .GetBearerToken(tokenForApothekeWhenMultipleSmcbFound : true);
                 Console.Out.WriteLine($"Get Bearer-Token ({sw.ElapsedMilliseconds}ms) = " + bearer);
 
-                string content = $@"POST /Task/{taskid}/$accept?ac={accesscode} HTTP/1.1
-Host: {new Uri(EREZEPT_FACHDIENST_URL).Host}
-Authorization: Bearer {bearer}
-Content-Type: application/fhir+xml
-Accept: application/fhir+xml;charset=utf-8
-
-"; //2 Newlines am Ende sind wichtig wegen RFC-HTTP
+                string content = $"POST /Task/{taskid}/$accept?ac={accesscode} HTTP/1.1\r\n" + 
+                                 $"Host: {new Uri(EREZEPT_FACHDIENST_URL).Host}\r\n" + 
+                                 $"Authorization: Bearer {bearer}\r\n" + 
+                                 $"Content-Type: application/fhir+xml\r\n" + 
+                                 $"Accept: application/fhir+xml;charset=utf-8\r\n\r\n"; //2 Newlines am Ende sind wichtig wegen RFC-HTTP
 
                 var vau = new VAU(USER_AGENT, EREZEPT_FACHDIENST_URL); 
 
