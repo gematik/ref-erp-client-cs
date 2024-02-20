@@ -1,24 +1,36 @@
+<img align="right" width="250" height="47" src="Gematik_Logo_Flag_With_Background.png"/> <br/>
+
 # ref-erp-client-cs
+
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#motivation">Motivation</a></li>
+    <li><a href="#funktionsumfang">Funktionsumfang</a></li>
+    <li><a href="#konfiguration">Konfiguration</a></li>
+    <li><a href="#xsds-ordner">xsds-Ordner</a></li>
+  </ol>
+</details>
 
 ## Motivation
 
 Der Beispiel-Code zeigt exemplarisch die Ansteuerung von IDP und ERezept-Fachdienst aus Arzt- und Apothekensystemen in C# mit Hilfe der ***TITUS-Demoumgebung***.<br>
-Der Beispielcode versucht viele Aspekte der Spezifikation umzusetzen, ist aber nicht geeignet 1:1 in einer Produktivumgebung eingesetzt zu werden, weil vor allem 
-Robustheit und Fehlertoleranz nicht ausreichend umgesetzt sind. Weiterhin ist die Prüfung der Signatur- und Verschlüsselungs-Zertifikate vom 
+Der Beispielcode versucht viele Aspekte der Spezifikation umzusetzen, ist aber nicht geeignet 1:1 in einer Produktivumgebung eingesetzt zu werden, weil vor allem
+Robustheit und Fehlertoleranz nicht ausreichend umgesetzt sind. Weiterhin ist die Prüfung der Signatur- und Verschlüsselungs-Zertifikate vom
 IDP und vom E-Rezept-Fachdienst nur ansatzweise dargestellt. Es fehlt die Prüfung der Zertifikate gemäß [gemSpec_PKI#TUK_PKI_018].
 
 ## Funktionsumfang
 
-- Beispiel zur Verschlüsselung für die VAU gemäß [gemSpec_Krypt#7] 
+- Beispiel zur Verschlüsselung für die VAU gemäß [gemSpec_Krypt#7]
 
 - Arzt: E-Rezept erstellen
   - `TestCreateERezeptInPraxis();`
   - führt die Authentifizierung als Arzt-Praxis mit dem IDP durch und lädt das Access_Token als BearerToken vom IDP (300s gültig!)
-  - erzeugt mittels FHIR-Operation `$create` des E-Rezept-Fachdienstes eine Task-Ressource, um die RezeptID zu erzeugen. 
-    Der Request wird verschlüsselt und an die VAU verschickt<br/> 
+  - erzeugt mittels FHIR-Operation `$create` des E-Rezept-Fachdienstes eine Task-Ressource, um die RezeptID zu erzeugen.
+    Der Request wird verschlüsselt und an die VAU verschickt<br/>
     siehe https://github.com/gematik/api-erp/blob/master/docs/authentisieren.adoc
   - der Vorgang wird ein 2. mal wiederholt um zu demonstrieren, wie mit der VAU und deren Nutzer-Pseudonym ab dem 2. Call umzugehen ist
-  - das macht das Bsp **nicht**: 
+  - das macht das Bsp **nicht**:
     - auf ähnliche Weise kann dann der mit dem Konnektor signierte FHIR-Datensatz (Rezept-Bundle) als Rezept angelegt werden (`$activate`-Operation).
 
 - Apotheke: E-Rezept abholen
@@ -26,7 +38,7 @@ IDP und vom E-Rezept-Fachdienst nur ansatzweise dargestellt. Es fehlt die Prüfu
   - Beispiel lädt ein ERezept in die Apotheke unter Angabe von Access_Token, taskid und accesscode (unter Nutzung von IDP und VAU).<br>
     `TestAcceptRezeptInApotheke(taskid : "19b56423-201c-11b2-804f-df8a779f13bd", accesscode : "c8a8086dc855bd7fb19630bfaae254b86068eca45131f32382cb6b27d75841ee");`<br>
     Dieses Rezept sollte vor jedem Lauf in Titus unter Rezeptverwaltung neu erzeugt werden, da derzeit jedes ERezept nur genau einmal geladen werden kann. (Sonst gibt es einen Fehler)
-  - bildet den `$accept`-Request zum E-Rezept-Fachdienst, um ein E-Rezept abzurufen und auszugeben. 
+  - bildet den `$accept`-Request zum E-Rezept-Fachdienst, um ein E-Rezept abzurufen und auszugeben.
   - Der Request wird verschlüsselt an die VAU verschickt.<br/>
     siehe https://github.com/gematik/api-erp/blob/master/docs/authentisieren.adoc
 
@@ -34,7 +46,7 @@ IDP und vom E-Rezept-Fachdienst nur ansatzweise dargestellt. Es fehlt die Prüfu
 
 ## Konfiguration
 
-In `Program.cs` sind alle URLs, und variablen Einstellungsparameter für den Konnektorkontext, IDP als Konstanten angelegt und so konfiguriert, dass man nur 
+In `Program.cs` sind alle URLs, und variablen Einstellungsparameter für den Konnektorkontext, IDP als Konstanten angelegt und so konfiguriert, dass man nur
 einen Parmameter zwingend anpassen muss: <br>
 
 	/// Client-Zertifikat für die Kommunikation mit dem lokalen Konnektor des PS
