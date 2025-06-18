@@ -13,9 +13,9 @@ namespace ERezeptClientSimpleExample {
         /// <summary>
         /// URLs aus TITUS Onlinehilfe (Titus emuliert sowohl einen PS Konnektor als auch IDP und Fachdienst)
         /// </summary>
-        const string IDP_SERVER_URL = "https://idp.erezept-instanz1.titus.ti-dienste.de";
-        const string EREZEPT_FACHDIENST_URL = "https://fd.erezept-instanz1.titus.ti-dienste.de";
-        const string PS_KONNEKTOR_DIENSTE_VERZEICHNIS_URL = "https://kon-instanz2.titus.ti-dienste.de/connector.sds"; 
+        const string IDP_SERVER_URL = "https://idp.erezept-instanz1.titus.gematik.solutions";
+        const string EREZEPT_FACHDIENST_URL = "https://fd.erezept-instanz1.titus.gematik.solutions";
+        const string PS_KONNEKTOR_DIENSTE_VERZEICHNIS_URL = "https://kon-instanz2.titus.gematik.solutions/connector.sds"; 
 
         const string CLIENT_ID = "gematikTestPs"; //client_id des Clients für IDP. Wird bei der Registrierung des PS von der Gematik vergeben. Im Titus-Umfeld 'fix'
         
