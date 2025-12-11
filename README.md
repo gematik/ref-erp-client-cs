@@ -1,5 +1,7 @@
 <img align="right" width="250" height="47" src="Gematik_Logo_Flag_With_Background.png"/> <br/>
-
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)](https://bitbucket.org/lbesson/ansi-colors)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 # ref-erp-client-cs
 
 <details>
